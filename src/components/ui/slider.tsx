@@ -1,8 +1,7 @@
 import * as React from "react";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import { cn } from "@/lib/utils";
-import { Answer, Question } from "@/app/typeform/typeform";
-import { isArray } from "util";
+import { Question } from "@/app/typeform/questions";
 
 // Make steps array that gets passed to the slider, and then map over it to render the steps
 type SliderProps = {

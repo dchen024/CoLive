@@ -32,7 +32,6 @@ import {
 } from "@/components/ui/form"
 
 import { Question, questions } from './questions';
-import { lowercaseAndRemoveSpaces } from '@/lib/utils';
 
 
 
@@ -60,7 +59,20 @@ export default function Typeform() {
   }
 
   function handleSubmit() {
-    form.handleSubmit((data: z.infer<typeof FormSchema>) => {})
+    // Form is only used on checkbox questions
+    if (!form.formState.isValid) {
+      form.setError("items", {
+        type: "manual",
+        message: "You have to select at least one item.",
+      })
+
+      // remove error after 1 second
+      setTimeout(() => {
+        form.clearErrors("items")
+      }, 1000)
+      
+   }
+
     // check if all questions are answered, if not, give default answer
     for (let question of currentQuestions) {
       if (question.answer === null) question.answer = question.defaultAnswer
@@ -158,14 +170,19 @@ export default function Typeform() {
                                           <Checkbox
                                             checked={field.value?.includes((item as string))}
                                             onCheckedChange={(checked) => {
+                          
                                               if (checked) field.onChange([...field?.value ?? [], (item as string)])
                                               else field.onChange(
                                                 field.value?.filter(
                                                   (value) => value !== (item as string)
                                                 )
                                               )
-                                             // todo: fix this, when unchecking, it should remove the item from the array.
-                                              setQuestion({...question, answer: [...new Set([...field?.value ?? [], checked ? (item as string) : ""])].filter((item) => item !== "")})
+                                              
+                                              if (checked) setQuestion({...question, answer: [...(question?.answer as string[] ?? []), (item as string)]})
+                                              else setQuestion({...question, answer: (question.answer as string[]).filter((value) => value != (item as string))})
+
+                                              console.log(question.answer)
+                                              console.log("TASK:", [...(question?.answer as string[] ?? []), (item as string)], checked)
                                             }}
                                           />
                                         </FormControl>
