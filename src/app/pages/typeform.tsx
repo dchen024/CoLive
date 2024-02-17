@@ -79,7 +79,7 @@ export default function Typeform() {
                   <h1 className="text-md font-bold">{question.question}</h1>
                   {question.type === "slider" && (
                     <div className="flex flex-col">
-                      <Slider className='mb-2 mt-2' step={1} min={1} max={5} />
+                      <Slider className='mb-2 mt-2' step={2} min={1} max={5} steps={["no", "neutral", "yes"]}/>
                       <h1 className="text-md font-bold">{question.roomate}</h1>
                       <Slider className='mb-2 mt-2' step={1} min={1} max={5} />
                     </div>

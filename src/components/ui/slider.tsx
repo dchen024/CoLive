@@ -2,15 +2,18 @@ import * as React from "react";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import { cn } from "@/lib/utils";
 
-interface SliderProps {
+// Make steps array that gets passed to the slider, and then map over it to render the steps
+type SliderProps = {
+  className?: string;
   min?: number;
   max?: number;
   step?: number;
-  className?: string;
-}
+  steps?: number[] | string[];
+};
+
 
 const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
-  ({ className, min = 0, max = 100, step = 1, ...props }, ref) => {
+  ({ className, min = 0, max = 100, step = 1, steps = 1, ...props }, ref) => {
     const [sliderValue, setSliderValue] = React.useState([min]);
 
     const handleChange = (value: [number]) => {
@@ -18,7 +21,8 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
     };
 
     const numSteps = (max - min) / step + 1;
-    const stepValues = Array.from({ length: numSteps }, (_, index) => min + step * index);
+    const stepValues = Array.from({ length: numSteps }, (_, i) => min + i * step);
+
 
     return (
       <div className={className}>
