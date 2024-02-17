@@ -10,9 +10,11 @@ function ProfileNavBar() {
         <div className="bg-white rounded-full p-2 inline-flex items-center justify-center">
           <Image src={MessageIcon} alt="Message Icon" width={48} height={48} />
         </div>
+
         <div className="bg-white rounded-full p-2 inline-flex items-center justify-center">
           <Image src={HomeIcon} alt="Tinder Icon" width={48} height={48} />
         </div>
+
         <div className="bg-white rounded-full p-2 inline-flex items-center justify-center">
           <Image src={ProfileIcon} alt="Profile Icon" width={48} height={48} />
         </div>
