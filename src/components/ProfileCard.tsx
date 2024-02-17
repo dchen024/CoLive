@@ -37,6 +37,8 @@ import Image from "next/image";
 import Img1 from "../../public/assets/example-apt/img1.webp";
 import Portrait from "../../public/assets/portrait.jpg";
 
+import { Separator } from "@/components/ui/separator";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const props: Props = {
@@ -58,7 +60,7 @@ const props: Props = {
 function ProfileCard() {
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col h-screen">
         {/* Top Nav Bar */}
         <div className="flex flex-row place-content-between w-[380px]">
           <div className="bg-white rounded-full p-2 inline-flex items-center justify-center">
@@ -111,163 +113,163 @@ function ProfileCard() {
           <CarouselNext /> */}
         </Carousel>
 
-        <div className="flex flex-col">
-          <ScrollArea className="flex flex-grow flex-col mt-2 w-full p-4 text-wrap ">
-            <div className="w-[348px] text-wrap">
-              <h1 className="font-semibold text-4xl break-words">
-                {props.first_name} {props.last_name}
-              </h1>
-            </div>
-            <Badge variant="outline" className="text-sm mt-2">
+        <div className="flex flex-col w-full p-4 text-wrap flex-grow overflow-auto">
+          <div className="w-[348px] text-wrap">
+            <h1 className="font-semibold text-4xl break-words">
+              {props.first_name} {props.last_name}
+            </h1>
+          </div>
+          <div className="">
+            <Badge variant="outline" className="text-sm mt-2 py-1">
               {props.gender}
             </Badge>
+          </div>
 
-            <div className="flex flex-col">
-              <h2 className="pt-2 text-lg">Preferred Boroughs:</h2>
-              <div className="flex flex-wrap">
-                {props.boroughs.map((borough, index) => (
-                  <div key={index} className="inline-block mr-2 mb-2">
-                    <Badge
-                      variant="outline"
-                      className="text-sm text-white"
-                      style={{
-                        background: "linear-gradient(45deg, #FF7854, #FD267D)",
-                      }}
-                    >
-                      {borough}
-                    </Badge>
-                  </div>
-                ))}
+          <Separator className="my-2" />
+
+          <div className="flex flex-col">
+            <h2 className="text-lg">Preferred Boroughs:</h2>
+            <div className="flex flex-wrap">
+              {props.boroughs.map((borough, index) => (
+                <div key={index} className="inline-block mr-2 mb-2">
+                  <Badge
+                    variant="outline"
+                    className="text-sm text-white"
+                    style={{
+                      background: "linear-gradient(45deg, #FF7854, #FD267D)",
+                    }}
+                  >
+                    {borough}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col space-y-2">
+            {props.user_shower_value && (
+              <div className="flex space-x-2">
+                <h2 className="pt-2 text-lg">Shower Frequency:</h2>
+                <div className="flex items-end">
+                  <Badge
+                    variant="outline"
+                    className="text-sm flex items-center justify-center px-4"
+                  >
+                    {props.user_shower_value}
+                  </Badge>
+                </div>
               </div>
-            </div>
+            )}
 
-            <div className="flex flex-col space-y-2 pt-2">
-              {props.user_shower_value && (
-                <div className="flex space-x-2">
-                  <h2 className="pt-2 text-lg">Shower Frequency:</h2>
-                  <div className="flex items-end">
-                    <Badge
-                      variant="outline"
-                      className="text-sm flex items-center justify-center px-4"
-                    >
-                      {props.user_shower_value}
-                    </Badge>
-                  </div>
+            {props.user_clean_value && (
+              <div className="flex space-x-2">
+                <h2 className="pt-2 text-lg">Room Cleanliness:</h2>
+                <div className="flex items-end">
+                  <Badge
+                    variant="outline"
+                    className="text-sm flex items-center justify-center px-4"
+                  >
+                    {props.user_clean_value}
+                  </Badge>
                 </div>
-              )}
+              </div>
+            )}
 
-              {props.user_clean_value && (
-                <div className="flex space-x-2">
-                  <h2 className="pt-2 text-lg">Room Cleanliness:</h2>
-                  <div className="flex items-end">
-                    <Badge
-                      variant="outline"
-                      className="text-sm flex items-center justify-center px-4"
-                    >
-                      {props.user_clean_value}
-                    </Badge>
-                  </div>
+            {props.user_friend_score && (
+              <div className="flex space-x-2">
+                <h2 className="pt-2 text-lg">Friend Score:</h2>
+                <div className="flex items-end">
+                  <Badge
+                    variant="outline"
+                    className="text-sm flex items-center justify-center px-4"
+                  >
+                    {props.user_friend_score}
+                  </Badge>
                 </div>
-              )}
+              </div>
+            )}
 
-              {props.user_friend_score && (
-                <div className="flex space-x-2">
-                  <h2 className="pt-2 text-lg">Friend Score:</h2>
-                  <div className="flex items-end">
-                    <Badge
-                      variant="outline"
-                      className="text-sm flex items-center justify-center px-4"
-                    >
-                      {props.user_friend_score}
-                    </Badge>
-                  </div>
+            {props.user_room_time_value && (
+              <div className="flex space-x-2">
+                <h2 className="pt-2 text-lg">Room Time:</h2>
+                <div className="flex items-end">
+                  <Badge
+                    variant="outline"
+                    className="text-sm flex items-center justify-center px-4"
+                  >
+                    {props.user_room_time_value}
+                  </Badge>
                 </div>
-              )}
+              </div>
+            )}
 
-              {props.user_room_time_value && (
-                <div className="flex space-x-2">
-                  <h2 className="pt-2 text-lg">Room Time:</h2>
-                  <div className="flex items-end">
-                    <Badge
-                      variant="outline"
-                      className="text-sm flex items-center justify-center px-4"
-                    >
-                      {props.user_room_time_value}
-                    </Badge>
-                  </div>
+            {props.user_sleep_time && (
+              <div className="flex space-x-2">
+                <h2 className="pt-2 text-lg">Sleep Time:</h2>
+                <div className="flex items-end">
+                  <Badge
+                    variant="outline"
+                    className="text-sm flex items-center justify-center px-4"
+                  >
+                    {props.user_sleep_time}
+                  </Badge>
                 </div>
-              )}
+              </div>
+            )}
 
-              {props.user_sleep_time && (
-                <div className="flex space-x-2">
-                  <h2 className="pt-2 text-lg">Sleep Time:</h2>
-                  <div className="flex items-end">
-                    <Badge
-                      variant="outline"
-                      className="text-sm flex items-center justify-center px-4"
-                    >
-                      {props.user_sleep_time}
-                    </Badge>
-                  </div>
+            {props.user_smoke !== undefined && (
+              <div className="flex space-x-2">
+                <h2 className="pt-2 text-lg">Smoker:</h2>
+                <div className="flex items-end">
+                  <Badge
+                    variant="outline"
+                    className="text-sm flex items-center justify-center px-4"
+                  >
+                    {props.user_smoke ? "Yes" : "No"}
+                  </Badge>
                 </div>
-              )}
+              </div>
+            )}
 
-              {props.user_smoke !== undefined && (
-                <div className="flex space-x-2">
-                  <h2 className="pt-2 text-lg">Smoker:</h2>
-                  <div className="flex items-end">
-                    <Badge
-                      variant="outline"
-                      className="text-sm flex items-center justify-center px-4"
-                    >
-                      {props.user_smoke ? "Yes" : "No"}
-                    </Badge>
-                  </div>
+            {props.user_temp_value && (
+              <div className="flex space-x-2">
+                <h2 className="pt-2 text-lg">Preferred Temperature:</h2>
+                <div className="flex items-end">
+                  <Badge
+                    variant="outline"
+                    className="text-sm flex items-center justify-center px-4"
+                  >
+                    {props.user_temp_value}
+                  </Badge>
                 </div>
-              )}
+              </div>
+            )}
 
-              {props.user_temp_value && (
-                <div className="flex space-x-2">
-                  <h2 className="pt-2 text-lg">Preferred Temperature:</h2>
-                  <div className="flex items-end">
-                    <Badge
-                      variant="outline"
-                      className="text-sm flex items-center justify-center px-4"
-                    >
-                      {props.user_temp_value}
-                    </Badge>
-                  </div>
+            {props.user_overnight_guest_value && (
+              <div className="flex space-x-2">
+                <h2 className="pt-2 text-lg">Overnight Guests:</h2>
+                <div className="flex items-end">
+                  <Badge
+                    variant="outline"
+                    className="text-sm flex items-center justify-center px-4"
+                  >
+                    {props.user_overnight_guest_value}
+                  </Badge>
                 </div>
-              )}
+              </div>
+            )}
+          </div>
+        </div>
 
-              {props.user_overnight_guest_value && (
-                <div className="flex space-x-2">
-                  <h2 className="pt-2 text-lg">Overnight Guests:</h2>
-                  <div className="flex items-end">
-                    <Badge
-                      variant="outline"
-                      className="text-sm flex items-center justify-center px-4"
-                    >
-                      {props.user_overnight_guest_value}
-                    </Badge>
-                  </div>
-                </div>
-              )}
-            </div>
-          </ScrollArea>
-
-          <div className="h-[90px] flex-grow-[90px]"></div>
-
-          <div className="flex flex-row place-content-evenly w-[380px] fixed bottom-10 h-[80px]">
-            <div className="bg-white rounded-full p-2 inline-flex items-center justify-center">
-              <Image src={Reject} alt="Message Icon" width={64} height={64} />
-            </div>
-            <div className="bg-white rounded-full p-2 inline-flex items-center justify-center">
-              <Image src={Back} alt="Tinder Icon" width={64} height={64} />
-            </div>
-            <div className="bg-white rounded-full p-2 inline-flex items-center justify-center">
-              <Image src={Like} alt="Profile Icon" width={64} height={64} />
-            </div>
+        <div className="flex flex-row place-content-evenly w-[380px]">
+          <div className="bg-white rounded-full p-2 inline-flex items-center justify-center">
+            <Image src={Reject} alt="Message Icon" width={64} height={64} />
+          </div>
+          <div className="bg-white rounded-full p-2 inline-flex items-center justify-center">
+            <Image src={Back} alt="Tinder Icon" width={64} height={64} />
+          </div>
+          <div className="bg-white rounded-full p-2 inline-flex items-center justify-center">
+            <Image src={Like} alt="Profile Icon" width={64} height={64} />
           </div>
         </div>
       </div>
@@ -275,15 +277,3 @@ function ProfileCard() {
   );
 }
 export default ProfileCard;
-
-{
-  /* 
-// TODO:
-  1. Add User Profile Data to text body
-  2. Style User Profile Data
-  3. Convert User Profile Data to use Props
-  4. Convert Images to state
-
-
-*/
-}
