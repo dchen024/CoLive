@@ -1,4 +1,5 @@
 import { authMiddleware } from "@clerk/nextjs";
+import next from "next";
 
 export default authMiddleware({
   // Routes that can be accessed while signed out
@@ -12,6 +13,7 @@ export default authMiddleware({
   // Routes that can always be accessed, and have
   // no authentication information
   ignoredRoutes: ["/api", "/trpc"],
+
 });
 
 export const config = {

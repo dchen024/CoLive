@@ -1,6 +1,8 @@
 import * as React from "react";
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import { cn } from "@/lib/utils";
+import { Answer, Question } from "@/app/typeform/typeform";
+import { isArray } from "util";
 
 // Make steps array that gets passed to the slider, and then map over it to render the steps
 type SliderProps = {
@@ -9,20 +11,25 @@ type SliderProps = {
   max?: number;
   step?: number;
   steps?: number[] | string[];
+  setQuestionHandle: (value: Question) => void;
+  isRoommate: boolean;
+  currentQuestion: Question;
 };
 
 
 const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
-  ({ className, min = 0, max = 100, step = 1, steps = 1, ...props }, ref) => {
-    const [sliderValue, setSliderValue] = React.useState([min]);
+  ({ className, setQuestionHandle, isRoommate, currentQuestion, min = 0, max = 100, step = 1, steps = 1, ...props }, ref) => {
+    const [sliderValue, setSliderValue] = React.useState([min + (max - min) / 2]);
 
     const handleChange = (value: [number]) => {
       setSliderValue(value);
+      console.log(isRoommate, typeof steps === "object" ? steps[value[0] - 1] : currentQuestion.defaultAnswer)
+      if (isRoommate) setQuestionHandle({...currentQuestion, roomateAnswer: typeof steps === "object" ? steps[value[0] - 1] : currentQuestion.defaultAnswer}) 
+      else setQuestionHandle({...currentQuestion, answer: typeof steps === "object" ? steps[value[0] - 1] : currentQuestion.defaultAnswer})
     };
 
     const numSteps = (max - min) / step + 1;
-    const stepValues = Array.from({ length: numSteps }, (_, i) => min + i * step);
-
+    const stepValues = (typeof steps === "object") ? steps : Array.from({ length: numSteps }, (_, i) => min + i * step);
 
     return (
       <div className={className}>
@@ -35,6 +42,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
           min={min}
           max={max}
           step={step}
+          // get middle value of the array
           value={sliderValue}
           onValueChange={handleChange}
           {...props}
@@ -46,7 +54,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
                 key={index}
                 className="absolute h-1 w-px bg-gray-300"
                 style={{
-                  left: `${((value - min) / (max - min)) * 100}%`,
+                  left: typeof steps === "object" ? `${(index / (numSteps - 1)) * 100}%` : `${(index / (numSteps - 1)) * 100}%`,
                 }}
               />
             ))}
