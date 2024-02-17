@@ -60,6 +60,7 @@ export default function Typeform() {
     api.on("select", () => {
       setCurrent(api.selectedScrollSnap() + 1)
     })
+
   }, [api])
 
     /**
@@ -69,7 +70,7 @@ export default function Typeform() {
    */
   return (
     <div>
-      <Carousel setApi={setApi} className="w-full max-w-xs">
+      <Carousel setApi={setApi} className="w-full max-w-xs mx-auto">
         <CarouselContent>
           {questions.map((question, index) => (
             <CarouselItem key={index}>
@@ -78,9 +79,9 @@ export default function Typeform() {
                   <h1 className="text-md font-bold">{question.question}</h1>
                   {question.type === "slider" && (
                     <div className="flex flex-col">
-                      <Slider className='mt-4 mb-4' defaultValue={[50]} />
+                      <Slider className='mb-2 mt-2' step={1} min={1} max={5} />
                       <h1 className="text-md font-bold">{question.roomate}</h1>
-                      <Slider className='mt-4' defaultValue={[50]} />
+                      <Slider className='mb-2 mt-2' step={1} min={1} max={5} />
                     </div>
                   )}
                   {question.type === "select" && (
@@ -113,8 +114,10 @@ export default function Typeform() {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious>Previous</CarouselPrevious>
-        <CarouselNext>Next</CarouselNext>
+        {/* TODO: move these to the bottom of the carousel ONLY ON MOBILE */}
+        <CarouselPrevious />
+        <CarouselNext />
+        
       </Carousel>
       <div className="flex-wrap flex justify-center mt-4">
         {Array.from({ length: count }).map((_, index) => (
