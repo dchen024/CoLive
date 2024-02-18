@@ -1,89 +1,68 @@
 export type Question = {
-  question: string
-  answer: string[] | string | number | null
-  defaultAnswer:string[] | string | number
-  type: "slider" | "select" | "checkbox" | "input"
-  options: string[] | number[]
-  roomate: string
-  roomateAnswer: string[] | string | number | null
-}
+  question: string;
+  answer: string[] | string | number | null;
+  defaultAnswer: string[] | string | number;
+  type: "slider" | "select" | "checkbox" | "input";
+  options: string[] | number[];
+  roommate: string;
+  roommateAnswer: string[] | string | number | null;
+};
 
 export const questions: Question[] = [
   {
     question: "What's your gender?",
     answer: null,
-    defaultAnswer: "male",
+    defaultAnswer: "Male",
     type: "select",
-    options: [
-      "Male",
-      "Female"
-    ],
-    roomate: "What gender would you like your roomate to be?",
-    roomateAnswer: null,
+    options: ["Male", "Female"],
+    roommate: "What gender would you like your roommate to be?",
+    roommateAnswer: null,
   },
   {
     question: "Do you smoke?",
     answer: null,
     defaultAnswer: "No",
     type: "select",
-    options: [
-      "Yes",
-      "No",
-    ],
-    roomate: "Do you want your roomate to smoke?",
-    roomateAnswer: null
+    options: ["Yes", "No"],
+    roommate: "Do you want your roommate to smoke?",
+    roommateAnswer: null,
   },
   {
-    question: "How clean are you?",
+    question: "How clean is your room?",
     answer: null,
     defaultAnswer: "Average",
     type: "slider",
-    options: [
-      "Not Clean",
-      "Average",
-      "Very Clean"
-    ],
-    roomate: "How clean would you like your roomate to be?",
-    roomateAnswer: null
+    options: ["Messy", "Average", "Very Clean"],
+    roommate: "How clean would you like your roommate to be?",
+    roommateAnswer: null,
   },
   {
     question: "How often do you shower?",
     answer: null,
     defaultAnswer: "Daily",
     type: "slider",
-    options: [
-      "Rarely",
-      "Daily",
-      "Weekly"
-    ],
-    roomate: "How often would you like your roomate to shower?",
-    roomateAnswer: null
+    options: ["Rarely", "Often", "Daily"],
+    roommate: "How often would you like your roommate to shower?",
+    roommateAnswer: null,
   },
   {
     question: "How often do you plan to stay in your room?",
     answer: null,
-    defaultAnswer: "Rarely",
+    defaultAnswer: "Often",
     type: "slider",
-    options: [
-      "Rarely",
-      "Often",
-      "Always"
-    ],
-    roomate: "How often would you like your roomate to stay in their room?",
-    roomateAnswer: null
+    options: ["Rarely", "Often", "Always"],
+    roommate: "How often would you like your roommate to stay in their room?",
+    roommateAnswer: null,
   },
   {
     question: "How likely are you to have overnight guests?",
     answer: null,
     defaultAnswer: "Never",
     type: "slider",
-    options: [
-      "Never",
-      "Rarely",
-      "Often"
-    ],
-    roomate: "How likely would you like your roomate to have overnight guests?",
-    roomateAnswer: null
+    options: ["Never", "Rarely", "Often"],
+    roommate:
+      "How likely would you like your roommate to have overnight guests?",
+    roommateAnswer: null,
   },
   {
     question: "What temperature do you prefer your room to be? (Fahrenheit)",
@@ -91,58 +70,44 @@ export const questions: Question[] = [
     defaultAnswer: 70,
     type: "input",
     options: [],
-    roomate: "What temperature would you like your roomate to prefer their room to be?",
-    roomateAnswer: null
+    roommate:
+      "What temperature would you like your roommate to prefer their room to be?",
+    roommateAnswer: null,
   },
   {
-    question: "What's your sexualitiy?",
+    question: "What's your sexuality?",
     answer: null,
     defaultAnswer: "Straight",
     type: "slider",
-    options: [
-      "Straight",
-      "Gay",
-      "Bi",
-    ],
-    roomate: "What sexualitiy would you like your roomate to be?",
-    roomateAnswer: null
+    options: ["Straight", "Gay", "Bi"],
+    roommate: "What sexuality would you like your roommate to be?",
+    roommateAnswer: null,
   },
   {
-    question: "What time do you go to bed? (Format: HH:MM:SS)",
+    question: "What time do you go to bed? (Format: HH:MM:SS AM/PM)",
     answer: null,
     defaultAnswer: new Date().toLocaleTimeString(),
     type: "input",
     options: [],
-    roomate: "What time would you like your roomate to go to bed?",
-    roomateAnswer: null
+    roommate: "What time would you like your roommate to go to bed?",
+    roommateAnswer: null,
   },
   {
     question: "How likely are you to have friends over?",
     answer: null,
     defaultAnswer: "Never",
     type: "slider",
-    options: [
-      "Never",
-      "Rarely",
-      "Often"
-    ],
-    roomate: "How likely would you like your roomate to have friends over?",
-    roomateAnswer: null
+    options: ["Never", "Rarely", "Often"],
+    roommate: "How likely would you like your roommate to have friends over?",
+    roommateAnswer: null,
   },
   {
-    question: "Which bouroughs would you like to live in?",
+    question: "Which borough(s) would you live in?",
     answer: null,
     defaultAnswer: "Manhattan",
     type: "checkbox",
-    options: [
-      "Manhattan",
-      "Brooklyn",
-      "Queens",
-      "Bronx",
-      "Staten Island"
-    ],
-    roomate: "Which bouroughs would you like your roomate to live in?",
-    roomateAnswer: null
+    options: ["Manhattan", "Brooklyn", "Queens", "Bronx", "Staten Island"],
+    roommate: "Which borough(s) would you live in?",
+    roommateAnswer: null,
   },
-
-]
+];

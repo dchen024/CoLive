@@ -37,7 +37,8 @@ jspm_packages
 .node_repl_history
 .next
 
-.node_modules
 package-lock.json
 yarn.lock
 .env
+
+.DS_Store
