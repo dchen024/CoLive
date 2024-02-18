@@ -36,7 +36,7 @@ export default function MobileMenu() {
 
   return (
     
-    <div className="flex md:hidden">
+    <div className="flex w-full justify-between md:hidden ml-20">
       {/* Hamburger button */}
       <button
         ref={trigger}

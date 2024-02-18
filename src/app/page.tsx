@@ -1,12 +1,18 @@
 import Image from "next/image";
 import { UserButton, SignOutButton } from "@clerk/nextjs";
 import { createClient } from "@/utils/supabase/client";
+import Header from "@/components/ui/header";
+import Hero from "@/components/ui/hero";
+import Features from "@/components/ui/features";
+import FeaturesBlocks from "@/components/ui/features-blocks";
+import Footer from "@/components/ui/footer";
 
 export default async function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Hello World</h1>
-      <UserButton />
+    <main className="flex min-h-screen flex-col items-center justify-between p-20">
+      <Header />
+      <Hero />
+      <Footer />
     </main>
   );
 }

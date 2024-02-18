@@ -40,5 +40,8 @@ jspm_packages
 package-lock.json
 yarn.lock
 .env
+.env.local
 
 .DS_Store
+
+.node_modules
