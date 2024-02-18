@@ -23,7 +23,7 @@ function NavBar() {
 
         <div className="bg-white rounded-full p-2 inline-flex items-center justify-center">
           {/* <Image src={ProfileIcon} alt="Profile Icon" width={48} height={48} /> */}
-          <UserButton />
+          <UserButton afterSignOutUrl={"/"} />
         </div>
       </div>
     </>
