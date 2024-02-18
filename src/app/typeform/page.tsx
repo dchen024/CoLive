@@ -39,7 +39,7 @@ import { currentUser } from '@clerk/nextjs';
 
 
 
-function Typeform({user}: {user: User | null}) {
+function Typeform({user}: {user: User | null | undefined}) {
   const supabase = createClient();
 
   const [api, setApi] = useState<CarouselApi>()
@@ -266,7 +266,7 @@ function Typeform({user}: {user: User | null}) {
                                         <FormControl>
                                           <Checkbox
                                             checked={field.value?.includes((item as string))}
-                                            onCheckedChange={(checked) => {
+                                            onCheckedChange={(checked: any) => {
                                               if (checked) field.onChange([...field?.value ?? [], (item as string)])
                                               else field.onChange(
                                                 field.value?.filter(

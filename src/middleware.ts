@@ -8,6 +8,7 @@ export default authMiddleware({
     "/sign-up",
     "/forgot-password",
     "/reset-password",
+    "/api/uploadthing",
     "/",
   ],
   // Routes that can always be accessed, and have
