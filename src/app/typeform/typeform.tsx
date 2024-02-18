@@ -1,6 +1,8 @@
+"use client"
+
 import React, {useState, useEffect, useRef} from 'react';
 import {Card, CardContent} from '@/components/ui/card';
-import { ChevronRightIcon, ChevronLeftIcon, ArrowLeftIcon} from "@radix-ui/react-icons"
+import { ChevronRightIcon, ChevronLeftIcon, ArrowLeftIcon, ReloadIcon} from "@radix-ui/react-icons"
 import { Select,
   SelectContent,
   SelectItem,
@@ -30,17 +32,22 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { createClient } from '@/utils/supabase/client';
 
 import { Question, questions } from './questions';
+import { User } from '@clerk/nextjs/server';
 
 
 
-export default function Typeform() {
+export default function Typeform({user}: {user: User | null}) {
+  const supabase = createClient();
+
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)
   const [count, setCount] = useState(0)
 
   const [currentQuestions, setQuestions] = useState<Question[]>(questions)
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const FormSchema = z.object({
     items: z.array(z.string()).refine((value) => value.some((item) => item), {
@@ -51,35 +58,85 @@ export default function Typeform() {
   
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      items: ["Brooklyn"],
+    },
   })
+
   // use ref to get the current question answere
 
   function setQuestion(question: Question) {
+    console.log(question.answer)
     setQuestions(currentQuestions.map((q) => q.question == question.question ? question : q))
   }
 
-  function handleSubmit() {
-    // Form is only used on checkbox questions
-    if (!form.formState.isValid) {
-      form.setError("items", {
-        type: "manual",
-        message: "You have to select at least one item.",
-      })
-
-      // remove error after 1 second
-      setTimeout(() => {
-        form.clearErrors("items")
-      }, 1000)
-      
-   }
+  async function handleSubmit() {
+    setIsButtonDisabled(true);
 
     // check if all questions are answered, if not, give default answer
     for (let question of currentQuestions) {
       if (question.answer === null) question.answer = question.defaultAnswer
-      if (question.roomateAnswer === null) question.roomateAnswer = question.defaultAnswer
+      if (question.roomateAnswer === null && question.type !== 'checkbox') question.roomateAnswer = question.defaultAnswer
     }
 
-    console.log(currentQuestions)
+    //TODO: remove this and use User.id when the the supabase id starts accepting alphanumeric characters
+    const testId = 2
+
+    // select id from user_responses where user_id = user.id, if user does not exist, insert user.id
+    const { data: user_responses } = await supabase
+      .from('user_responses')
+      .select('id')
+      .eq('id', testId)
+
+    console.log(user_responses)
+
+    if (user_responses?.length === 0) {
+      const { data, error } = await supabase
+      .from('user_responses')
+      .insert([
+        { id: testId }
+      ])
+
+      console.log(data, error)
+    }
+
+    // insert all the questions into the user_responses table
+    
+    const { data, error } = await supabase
+    .from('user_responses')
+    .upsert([
+      {id: testId,
+        'gender': currentQuestions[0].answer, 
+        'user_preferred_gender': currentQuestions[0].roomateAnswer,
+        'user_smoke': currentQuestions[1].answer === 'Yes' ? true : false,
+        'user_preferred_smoke': currentQuestions[1].roomateAnswer === 'Yes' ? true : false,
+        'user_clean_value': currentQuestions[2].options.findIndex((option) => option === currentQuestions[2].answer) + 1, // +1 because the index starts at 0
+        'user_preferred_clean_value': currentQuestions[2].options.findIndex((option) => option === currentQuestions[2].roomateAnswer) + 1,
+        'user_shower_value': currentQuestions[3].options.findIndex((option) => option === currentQuestions[3].answer) + 1,
+        'user_preferred_shower_value': currentQuestions[3].options.findIndex((option) => option === currentQuestions[3].roomateAnswer) + 1,
+        'user_room_time_value': currentQuestions[4].options.findIndex((option) => option === currentQuestions[4].answer) + 1,
+        'user_preferred_room_time_value': currentQuestions[4].options.findIndex((option) => option === currentQuestions[4].roomateAnswer) + 1,
+        'user_overnight_guest_value': currentQuestions[5].options.findIndex((option) => option === currentQuestions[5].answer) + 1,
+        'user_preferred_overnight_guest_value': currentQuestions[5].options.findIndex((option) => option === currentQuestions[5].roomateAnswer) + 1,
+        'user_temp_value': currentQuestions[6].answer,
+        'user_preferred_temp_value': currentQuestions[6].roomateAnswer,
+        'sexuality': currentQuestions[7].answer,
+        'user_sleep_time': currentQuestions[8].answer,
+        'user_preferred_sleep_time': currentQuestions[8].roomateAnswer,
+        'user_friend_score': currentQuestions[9].answer,
+        'user_preferred_friend_score': currentQuestions[9].roomateAnswer,
+      },
+    ])
+    .select()
+
+    await supabase
+    .from('user_responses')
+    .update([{ boroughs: currentQuestions[10].answer }])
+    .eq('id', testId)
+
+    setIsButtonDisabled(false);
+
+    //TODO: redirect to the next page
   }
 
   useEffect(() => {
@@ -142,6 +199,44 @@ export default function Typeform() {
                       </Select>
                     </div>
                   )}
+                  {
+                    question.type === "input" && (
+                      <Form {...form}>
+                        <form className="space-y-8">
+                          <FormField
+                            name="items"
+                            render={() => (
+                              <FormItem>
+                                <div className="mb-4">
+                                  <FormDescription>
+                                    Please enter your preferred temperature.
+                                  </FormDescription>
+                                </div>
+                                <FormControl>
+                                  <input
+                                    type="text"
+                                    className="w-full border border-gray-300 rounded-md p-2"
+                                    placeholder="Enter your preferred temperature"
+                                    onChange={(e) => setQuestion({...question, answer: e.target.value})}
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                                <h1 className="text-md font-bold">{question.roomate}</h1>
+                                <FormControl>
+                                  <input
+                                    type="text"
+                                    className="w-full border border-gray-300 rounded-md p-2"
+                                    placeholder="Enter your preferred temperature"
+                                    onChange={(e) => setQuestion({...question, roomateAnswer: e.target.value})}
+                                  />
+                                </FormControl>
+                              </FormItem>
+                            )}
+                          />
+                        </form>
+                      </Form>
+                    )
+                  }
                   {question.type === "checkbox" && (
                       <Form {...form}>
                       <form className="space-y-8">
@@ -170,7 +265,6 @@ export default function Typeform() {
                                           <Checkbox
                                             checked={field.value?.includes((item as string))}
                                             onCheckedChange={(checked) => {
-                          
                                               if (checked) field.onChange([...field?.value ?? [], (item as string)])
                                               else field.onChange(
                                                 field.value?.filter(
@@ -181,8 +275,7 @@ export default function Typeform() {
                                               if (checked) setQuestion({...question, answer: [...(question?.answer as string[] ?? []), (item as string)]})
                                               else setQuestion({...question, answer: (question.answer as string[]).filter((value) => value != (item as string))})
 
-                                              console.log(question.answer)
-                                              console.log("TASK:", [...(question?.answer as string[] ?? []), (item as string)], checked)
+
                                             }}
                                           />
                                         </FormControl>
@@ -232,7 +325,14 @@ export default function Typeform() {
         </Button>
         {
           current === currentQuestions.length ? 
-          <Button className="bg-black text-white" onClick={() => handleSubmit()}>Submit</Button> 
+          
+            isButtonDisabled
+            ? <Button onClick={handleSubmit} className="bg-black text-white" disabled={isButtonDisabled}>
+                <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                Submit
+              </Button>
+            : <Button className="bg-black text-white" onClick={() => handleSubmit()}>Submit</Button>
+          
           : <Button onClick={() => api?.scrollNext()} className="bg-black text-white">
             Question {current + 1} 
             <ChevronRightIcon className="h-4 w-4" />

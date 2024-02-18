@@ -1,29 +1,17 @@
-"use client";
-
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { UserButton, SignOutButton } from "@clerk/nextjs";
 import Typeform from "@/app/typeform/typeform";
-import { currentUser } from "@clerk/nextjs";
 import { User } from "@clerk/nextjs/server";
+import { currentUser } from '@clerk/nextjs';
+import { createClient } from "@/utils/supabase/client";
 
-export default function Home() {
-  const [user, setUser] = useState<User | null>(null);
-
-  const fetchUser = async () => {
-    const me = await currentUser();
-    setUser(me);
-  };
-
-
-  useEffect(() => {
-    fetchUser();
-  }, []);
+export default async function Home() {
+  const user = await currentUser();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Hello {user?.id}</h1>
-      <Typeform />
+      <h1>Hello {user?.id ?? "N/A"}</h1>
+      <Typeform user={JSON.parse(JSON.stringify(user))} />
       <UserButton />
     </main>
   );
