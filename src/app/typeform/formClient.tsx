@@ -161,7 +161,7 @@ function Typeform({ id, firstName, lastName }) {
 
     setIsButtonDisabled(false);
 
-    router.push("/home");
+    router.push("/uploadthing");
   }
 
   useEffect(() => {
