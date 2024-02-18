@@ -1,7 +1,21 @@
+# CoLive
+
+CoLive is a web application that allows users to find roommates and housing in the Boston area. Users can create a profile, search for roommates, and search for housing. Users can also create a listing for housing or a roommate.
+
+## Installation
+To run the application, you will need to install the following dependencies:
+```bash
+npm install
 ```
-  <main className="flex min-h-screen flex-col items-center min-w-screen overflow-hidden">
-      <div className="flex flex-col items-center w-[380px] h-screen">
-        <ProfileCard />
-      </div>
-  </main>
+
+## Usage
+To run the application, you will need to run the following command:
+```bash
+npm run dev
 ```
+
+## Technologies Used
+- Next.js
+- Node.js
+- Express.js
+- Supabase
