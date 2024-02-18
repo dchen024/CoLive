@@ -1,11 +1,15 @@
-import ProfileCard from "@/components/ProfileCard";
+import React from "react";
+import { SignOutButton } from "@clerk/nextjs";
 
-export default function Home() {
+const page = () => {
   return (
-    <main className="flex min-h-screen flex-col items-center min-w-screen overflow-hidden">
-      <div className="flex flex-col items-center w-[380px] h-screen">
-        <ProfileCard />
+    <div className="flex min-h-screen flex-col items-center justify-between p-24">
+      <div className="flex flex-col items-center justify-between p-24">
+        <h1>Hello World</h1>
       </div>
-    </main>
+      <SignOutButton />
+    </div>
   );
-}
+};
+
+export default page;

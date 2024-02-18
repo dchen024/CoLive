@@ -1,19 +1,12 @@
 import Image from "next/image";
-import Typeform from "./pages/typeform";
-import Hero from "@/components/ui/hero";
-import Header from "@/components/ui/header";
-import Footer from "@/components/ui/footer";
-import FeaturesBlocks from "@/components/ui/features-blocks";
-import Features from "@/components/ui/features";
+import { UserButton, SignOutButton } from "@clerk/nextjs";
+import { createClient } from "@/utils/supabase/client";
 
-export default function Home() {
+export default async function Home() {
   return (
-    <main className=" flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
-      <Header />
-      <Hero />
-      <Features />
-      <FeaturesBlocks />
-      <Footer />
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <h1>Hello World</h1>
+      <UserButton />
     </main>
   );
 }
