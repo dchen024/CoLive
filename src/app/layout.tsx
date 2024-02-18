@@ -20,13 +20,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        variables: {
+          colorPrimary: "#FF5864",
+        },
+      }}
+    >
       <html lang="en">
         <body className={inter.className}>
-          <NextSSRPlugin 
-            routerConfig={extractRouterConfig(ourFileRouter)}/>
+          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
           {children}
-          </body>
+        </body>
       </html>
     </ClerkProvider>
   );
