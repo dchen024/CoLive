@@ -1,17 +1,17 @@
 import Image from "next/image";
-import Hero from "@/components/ui/hero";
+import { UserButton, SignOutButton } from "@clerk/nextjs";
+import { createClient } from "@/utils/supabase/client";
 import Header from "@/components/ui/header";
-import Footer from "@/components/ui/footer";
-import FeaturesBlocks from "@/components/ui/features-blocks";
+import Hero from "@/components/ui/hero";
 import Features from "@/components/ui/features";
+import FeaturesBlocks from "@/components/ui/features-blocks";
+import Footer from "@/components/ui/footer";
 
 export default function Home() {
   return (
-    <main className=" flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
+    <main className="flex h-full flex-col items-center justify-between p-20">
       <Header />
       <Hero />
-      <Features />
-      <FeaturesBlocks />
       <Footer />
     </main>
   );
