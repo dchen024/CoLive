@@ -63,10 +63,12 @@ export default function Typeform({user}: {user: User | null}) {
     },
   })
 
+  const form2 = useForm();
+
+
   // use ref to get the current question answere
 
   function setQuestion(question: Question) {
-    console.log(question.answer)
     setQuestions(currentQuestions.map((q) => q.question == question.question ? question : q))
   }
 
@@ -123,8 +125,8 @@ export default function Typeform({user}: {user: User | null}) {
         'sexuality': currentQuestions[7].answer,
         'user_sleep_time': currentQuestions[8].answer,
         'user_preferred_sleep_time': currentQuestions[8].roomateAnswer,
-        'user_friend_score': currentQuestions[9].answer,
-        'user_preferred_friend_score': currentQuestions[9].roomateAnswer,
+        'user_friend_score': currentQuestions[9].options.findIndex((option) => option === currentQuestions[9].answer) + 1,
+        'user_preferred_friend_score': currentQuestions[9].options.findIndex((option) => option === currentQuestions[9].roomateAnswer) + 1,
       },
     ])
     .select()
@@ -201,10 +203,10 @@ export default function Typeform({user}: {user: User | null}) {
                   )}
                   {
                     question.type === "input" && (
-                      <Form {...form}>
+                      <Form {...form2}>
                         <form className="space-y-8">
                           <FormField
-                            name="items"
+                            name="inputtext"
                             render={() => (
                               <FormItem>
                                 <div className="mb-4">
