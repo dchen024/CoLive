@@ -1,14 +1,13 @@
 import React from "react";
-import { SignOutButton } from "@clerk/nextjs";
+import ProfileCard from "../../components/ProfileCard";
 
 const page = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="flex flex-col items-center justify-between p-24">
-        <h1>Hello World</h1>
+    <main className="flex min-h-screen flex-col items-center min-w-screen overflow-hidden">
+      <div className="flex flex-col items-center w-[380px] h-screen">
+        <ProfileCard />
       </div>
-      <SignOutButton />
-    </div>
+    </main>
   );
 };
 
