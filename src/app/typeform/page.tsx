@@ -1,6 +1,10 @@
 "use client"
 
 import React, {useState, useEffect, useRef} from 'react';
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
 import {Card, CardContent} from '@/components/ui/card';
 import { ChevronRightIcon, ChevronLeftIcon, ArrowLeftIcon, ReloadIcon} from "@radix-ui/react-icons"
 import { Select,
@@ -18,10 +22,6 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
- 
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
@@ -33,13 +33,13 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { createClient } from '@/utils/supabase/client';
-
 import { Question, questions } from './questions';
 import { User } from '@clerk/nextjs/server';
+import { currentUser } from '@clerk/nextjs';
 
 
 
-export default function Typeform({user}: {user: User | null}) {
+function Typeform({user}: {user: User | null}) {
   const supabase = createClient();
 
   const [api, setApi] = useState<CarouselApi>()
@@ -161,7 +161,7 @@ export default function Typeform({user}: {user: User | null}) {
    * Each question can be a different type of input, such a slider, or select.
    */
   return (
-    <div>
+    <div className='flex-col items-center max-w-xs mx-auto mt-10'>
       <Carousel setApi={setApi} className="w-full max-w-xs mx-auto">
         <CarouselContent>
           {currentQuestions.map((question, index) => (
@@ -345,3 +345,5 @@ export default function Typeform({user}: {user: User | null}) {
     </div>
   )
 }
+
+export default Typeform;
