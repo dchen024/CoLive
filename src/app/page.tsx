@@ -9,7 +9,7 @@ import Footer from "@/components/ui/footer";
 
 export default async function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-20">
+    <main className="flex h-full flex-col items-center justify-between p-20">
       <Header />
       <Hero />
       <Footer />
