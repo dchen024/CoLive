@@ -27,5 +27,5 @@ npm run dev
 - TypeScript
 - TailwindCSS
 - Amazon S3
-- Supabase + PostgresSQL
+- Supabase + PostgreSQL
 - Clerk
